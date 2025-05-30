@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +26,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -415,6 +417,7 @@
             border-radius: 50%;
             transition: all 0.3s ease;
             color: var(--color-light);
+            text-decoration: none;
         }
 
         .social-link:hover {
@@ -423,7 +426,139 @@
             transform: translateY(-3px);
         }
 
-        /* For PDF export optimization */
+        /* Form styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: var(--color-light);
+            font-family: var(--font-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--color-light);
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2300f0ff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
+        /* Form submission status */
+        .form-status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .form-status.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            display: block;
+        }
+        
+        .form-status.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff0080;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            display: block;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-link {
+            color: var(--color-light);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--color-primary);
+            color: black;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--color-primary);
+            color: black;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: var(--color-secondary);
+        }
+        
+        /* For screens without cursor */
+        @media (hover: none) {
+            body {
+                cursor: auto;
+            }
+            .cursor, .cursor-dot {
+                display: none;
+            }
+        }
+        
+        /* For print/PDF export */
          {
             body {
                 cursor: default;
@@ -441,6 +576,30 @@
                 break-inside: avoid;
                 page-break-inside: avoid;
                 min-height: auto;
+                padding: 40px 5%;
+            }
+            
+            .nav-menu, .back-to-top {
+                display: none;
+            }
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .panel {
+                padding: 5% 5%;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
             }
         }
     </style>
@@ -451,7 +610,16 @@
 
     <div id="scene-container"></div>
 
-    <header class="hero">
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <a href="#intro" class="nav-link">About</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#showcase" class="nav-link">Showcase</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <header class="hero" id="home">
         <div>
             <h1 class="animated-text">
                 <span>T</span><span>N</span><span>L</span><span>-</span><span>M</span><span>E</span><span>D</span><span>I</span><span>A</span>
@@ -476,7 +644,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
                     <p class="text-xl mb-6">When everyone else is making chatbots that answer questions, we're building agents that run your business while you sleep.</p>
-                    <p class="mb-6">Our AI systems don't just chat—they <span class="text-primary">take action</span>. They process orders, manage inventory, handle customer service, and even make business decisions when properly configured.</p>
+                    <p class="mb-6">Our AI systems don't just chat—they <span style="color: var(--color-primary);">take action</span>. They process orders, manage inventory, handle customer service, and even make business decisions when properly configured.</p>
                     <p>Think of them as digital employees who are always on, never complain, and can be duplicated infinitely as your business grows.</p>
                 </div>
                 <div class="tech-stack">
@@ -496,7 +664,7 @@
         </div>
     </section>
 
-    <section id="products" class="panel bg-black">
+    <section id="products" class="panel" style="background-color: #000000;">
         <div class="w-full">
             <h2 class="section-title">Our Digital<br>Workforce</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -511,7 +679,7 @@
                         <div class="tech-tag">Web Integration</div>
                         <div class="tech-tag">CRM Connection</div>
                     </div>
-                    <a href="#" class="btn">EXPLORE</a>
+                    <a href="#contact" class="btn">GET STARTED</a>
                 </div>
                 <div class="product-card">
                     <div class="icon-container">
@@ -524,7 +692,7 @@
                         <div class="tech-tag">API Integration</div>
                         <div class="tech-tag">Decision Trees</div>
                     </div>
-                    <a href="#" class="btn">EXPLORE</a>
+                    <a href="#contact" class="btn">GET STARTED</a>
                 </div>
                 <div class="product-card">
                     <div class="icon-container">
@@ -537,7 +705,7 @@
                         <div class="tech-tag">Zendesk/Intercom</div>
                         <div class="tech-tag">Knowledge Base</div>
                     </div>
-                    <a href="#" class="btn">EXPLORE</a>
+                    <a href="#contact" class="btn">GET STARTED</a>
                 </div>
             </div>
         </div>
@@ -549,7 +717,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
                     <p class="text-xl mb-6">Go ahead. Ask our AI anything about our products. It's just a demo, but it gives you a taste of how our systems respond.</p>
-                    <p class="mb-6">Want to see the real deal? <a href="#contact" class="text-primary underline">Book a personalized demo</a> where we'll show you how our AI can be customized for your specific business needs.</p>
+                    <p class="mb-6">Want to see the real deal? <a href="#contact" style="color: var(--color-primary); text-decoration: underline;">Book a personalized demo</a> where we'll show you how our AI can be customized for your specific business needs.</p>
                 </div>
                 <div class="demo-container">
                     <div class="chat-window">
@@ -565,8 +733,8 @@
                             </div>
                         </div>
                         <div class="chat-input">
-                            <input type="text" placeholder="Type your message..." disabled>
-                            <button><i class="fas fa-paper-plane"></i></button>
+                            <input type="text" placeholder="Type your message..." id="demo-chat-input">
+                            <button id="demo-chat-send"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
                 </div>
@@ -574,7 +742,7 @@
         </div>
     </section>
 
-    <section id="about" class="panel bg-black">
+    <section id="about" class="panel" style="background-color: #000000;">
         <div class="w-full">
             <h2 class="section-title">Why AI Agents<br>Not Just Chatbots</h2>
             <div class="about-container">
@@ -656,7 +824,7 @@
         </div>
     </section>
 
-    <section id="pricing" class="panel bg-black">
+    <section id="pricing" class="panel" style="background-color: #000000;">
         <div class="w-full">
             <h2 class="section-title">Intelligent Pricing<br>For Smart Business</h2>
             <div class="grid-container">
@@ -671,7 +839,7 @@
                         <li><i class="fas fa-check"></i> 100 hours/month operation</li>
                         <li><i class="fas fa-check"></i> Email support</li>
                     </ul>
-                    <a href="#" class="btn">GET STARTED</a>
+                    <a href="#contact" class="btn">GET STARTED</a>
                 </div>
                 <div class="pricing-card">
                     <h3>Business</h3>
@@ -684,7 +852,7 @@
                         <li><i class="fas fa-check"></i> Unlimited operation</li>
                         <li><i class="fas fa-check"></i> Priority support</li>
                     </ul>
-                    <a href="#" class="btn">GET STARTED</a>
+                    <a href="#contact" class="btn">GET STARTED</a>
                 </div>
                 <div class="pricing-card">
                     <h3>Enterprise</h3>
@@ -697,7 +865,7 @@
                         <li><i class="fas fa-check"></i> Dedicated infrastructure</li>
                         <li><i class="fas fa-check"></i> 24/7 dedicated support</li>
                     </ul>
-                    <a href="#" class="btn">CONTACT US</a>
+                    <a href="#contact" class="btn">CONTACT US</a>
                 </div>
             </div>
         </div>
@@ -709,8 +877,42 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
                     <p class="text-xl mb-6">Your competitors are already implementing AI agents. Don't get left behind.</p>
-                    <p class="mb-6">Schedule a demo call today and we'll show you exactly how our technology can transform your specific business operations.</p>
-                    <a href="#" class="btn">SCHEDULE DEMO</a>
+                    <p class="mb-6">Fill out the form to schedule a demo call today and we'll show you exactly how our technology can transform your specific business operations.</p>
+                    
+                    <!-- Contact Form with Formspree Integration -->
+                    <form id="contact-form" action="https://formspree.io/f/mrbqgagy" method="POST">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company" class="form-label">Company Name</label>
+                            <input type="text" id="company" name="company" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget" class="form-label">Budget Range</label>
+                            <select id="budget" name="budget" class="form-control form-select">
+                                <option value="">Select your budget range</option>
+                                <option value="Under $2,000">Under $2,000</option>
+                                <option value="$2,000 - $5,000">$2,000 - $5,000</option>
+                                <option value="$5,000 - $10,000">$5,000 - $10,000</option>
+                                <option value="$10,000+">$10,000+</option>
+                                <option value="Not sure yet">Not sure yet</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Tell us about your project</label>
+                            <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn" id="submit-btn">SCHEDULE DEMO</button>
+                            <div id="form-status" class="form-status"></div>
+                        </div>
+                    </form>
                 </div>
                 <div class="product-card">
                     <h3>What happens next?</h3>
@@ -736,13 +938,18 @@
             <a href="#contact">Contact</a>
         </div>
         <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
         <p class="mt-10 text-sm opacity-70">© 2024 TNL-Media. All rights reserved. No cookies, no trackers—just awesome AI.</p>
     </footer>
+
+    <!-- Back to top button -->
+    <a href="#home" class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
 
     <script>
         // Custom cursor
@@ -964,14 +1171,159 @@
         
         // Start demo chat after a delay
         setTimeout(addDemoMessage, 5000);
+
+        // Interactive chat demo input
+        const demoChatInput = document.getElementById('demo-chat-input');
+        const demoChatSend = document.getElementById('demo-chat-send');
+        
+        const botResponses = [
+            "Great question! Our AI agents can be customized for any industry, but we've seen particularly strong results in e-commerce, customer service, legal, and healthcare sectors.",
+            "Our pricing starts at $1,999 for a single customized AI agent. Enterprise solutions with multiple integrated agents are custom-priced based on your specific needs.",
+            "Unlike most chatbots, our agents can directly integrate with your existing systems—CRMs, databases, email platforms, inventory management—allowing them to take action, not just provide information.",
+            "Security is a top priority. We use enterprise-grade encryption, strict access controls, and can deploy solutions on your private cloud if needed. All data handling complies with GDPR, CCPA, and other relevant regulations.",
+            "Absolutely! Our systems can be configured to work alongside your human team, handling routine tasks while escalating complex issues that require a human touch."
+        ];
+        
+        demoChatSend.addEventListener('click', function() {
+            const userMessage = demoChatInput.value.trim();
+            if (userMessage) {
+                // Add user message to chat
+                const messagesContainer = document.querySelector('.chat-messages');
+                const userMessageEl = document.createElement('div');
+                userMessageEl.classList.add('message', 'user-message');
+                userMessageEl.textContent = userMessage;
+                messagesContainer.appendChild(userMessageEl);
+                
+                // Clear input
+                demoChatInput.value = '';
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Simulate bot thinking and response
+                setTimeout(() => {
+                    const botMessageEl = document.createElement('div');
+                    botMessageEl.classList.add('message', 'bot-message');
+                    botMessageEl.textContent = botResponses[Math.floor(Math.random() * botResponses.length)];
+                    messagesContainer.appendChild(botMessageEl);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+            }
+        });
+        
+        demoChatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                demoChatSend.click();
+            }
+        });
+        
+        // Form submission with Formspree
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Change button text to show loading
+            submitBtn.textContent = 'SENDING...';
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            
+            // Send to Formspree
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .then(data => {
+                // Show success message
+                formStatus.textContent = 'Thank you! We\'ve received your request and will contact you shortly.';
+                formStatus.className = 'form-status success';
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Reset button
+                submitBtn.textContent = 'SCHEDULE DEMO';
+            })
+            .catch(error => {
+                // Show error message
+                formStatus.textContent = 'Oops! There was a problem submitting your form. Please try again.';
+                formStatus.className = 'form-status error';
+                
+                // Reset button
+                submitBtn.textContent = 'SCHEDULE DEMO';
+                console.error('Error:', error);
+            });
+        });
+        
+        // Navigation active state on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Back to top button visibility
+            const backToTop = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDuQ8WKSn4M9YaofA%2BCLEYGv9YVzwhwvrqVak%2FBIIXC3jnxslRY4cSFEe%2FhMfMM%2BE5Z%2FW8P24FiHNpy3owg8ro3c%2BuuGchctnYRtvApzIvY7VmJDftvRNZRBNaTsEx65UHU%2B8Hd2kyL7r90yyGNElVOXyB7ZMiZr71gHL5T14pnc9Ek1snOX400wUiMgsV0TzZHkmmK9%2F0aGLxy3K0NIsPKU%2FT0m1NXgN%2Fh5jPbF7B10YFXnEb7hUgios80CHPCoznXQk5Yu9zLdP7EPOf1ZOJP6FBNyUqyYSF43QMTMuJhMefDCwq7CicSaRgnKvUXF8llVEOyjnhKFMwJXFOEAbpVbEbfF5ERQotUlbtOGWcL7cj0YeePlxUVDYhDh%2Bm7OLGIvDPX0anHGIDK0WUHL80%2FLEr%2FWn3OkCpu2u4mZXJvvLyHe0VLFcX6QMHU6pBuPLefumumUhZ1mGgE96eiG%2FYjIHRah0uYGHBJ60ddt8kThPnxB4H6YAGKtJCpPOdiOWYw%3D%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnZRuNb0TBOb3bWILwGNEbf4aHPKbhAZ%2FXsQ69I360uTDgPon0NuOJNExTLC7LymVPPB9zPul8nYEviiliapTEqo5TH7rduAdzjI8z07UD9Fh3QqcILGxlXqepqEHGWUdYXV3XWgQDKPctOWyqptpYpbN%2FXOSmDVMFXjKixeClNED4McLFTrU04K4PcvESgLV0%2B2IHJqgTjzWE21ceR%2B78iDi%2FlmBBa1ZBLw2QAQRm8fXvkuOdcKGYNVVLOmMQC%2Blb48UO84apfP75h2zaQyUnW1KPNJFu5zZB2DEdU1Xzzff1uCXtPcBoMl1v7hqu4SpXYAS%2BoG8YVaPqGsRde0AcLQBqJafARdZDMRZ5C%2B3Uovq5UwTyFLsnfWvdLg46g5yCUR%2FTwmNCLdK4TLA8425gDyFxf83iIW3rUVyLFhXMc%2BoDPWZh24hRuNhh6NEhgX210Io2zCXtF0AUBz4BoM2xtaGQ7l7E6m%2BP7g5VjTWBHvgIYG0HypasOR7A8HgA7KZNb0o8QQqoWqGyxSX3B4r8E%3D";
         window.__genspark_locale = "en-US";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDuQ8WKSn4M9YaofA+CLEYGv9YVzwhwvrqVak/BIIXC3jnxslRY4cSFEe/hMfMM+E5Z/W8P24FiHNpy3owg8ro3c+uuGchctnYRtvApzIvY7VmJDftvRNZRBNaTsEx65UHU+8Hd2kyL7r90yyGNElVOXyB7ZMiZr71gHL5T14pnc9Ek1snOX400wUiMgsV0TzZHkmmK9/0aGLxy3K0NIsPKU/T0m1NXgN/h5jPbF7B10YFXnEb7hUgios80CHPCoznXQk5Yu9zLdP7EPOf1ZOJP6FBNyUqyYSF43QMTMuJhMefDCwq7CicSaRgnKvUXF8llVEOyjnhKFMwJXFOEAbpVbEbfF5ERQotUlbtOGWcL7cj0YeePlxUVDYhDh+m7OLGIvDPX0anHGIDK0WUHL80/LEr/Wn3OkCpu2u4mZXJvvLyHe0VLFcX6QMHU6pBuPLefumumUhZ1mGgE96eiG/YjIHRah0uYGHBJ60ddt8kThPnxB4H6YAGKtJCpPOdiOWYw==";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnZRuNb0TBOb3bWILwGNEbf4aHPKbhAZ/XsQ69I360uTDgPon0NuOJNExTLC7LymVPPB9zPul8nYEviiliapTEqo5TH7rduAdzjI8z07UD9Fh3QqcILGxlXqepqEHGWUdYXV3XWgQDKPctOWyqptpYpbN/XOSmDVMFXjKixeClNED4McLFTrU04K4PcvESgLV0+2IHJqgTjzWE21ceR+78iDi/lmBBa1ZBLw2QAQRm8fXvkuOdcKGYNVVLOmMQC+lb48UO84apfP75h2zaQyUnW1KPNJFu5zZB2DEdU1Xzzff1uCXtPcBoMl1v7hqu4SpXYAS+oG8YVaPqGsRde0AcLQBqJafARdZDMRZ5C+3Uovq5UwTyFLsnfWvdLg46g5yCUR/TwmNCLdK4TLA8425gDyFxf83iIW3rUVyLFhXMc+oDPWZh24hRuNhh6NEhgX210Io2zCXtF0AUBz4BoM2xtaGQ7l7E6m+P7g5VjTWBHvgIYG0HypasOR7A8HgA7KZNb0o8QQqoWqGyxSX3B4r8E=";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
